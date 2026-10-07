@@ -102,7 +102,7 @@ require_once __DIR__ . "/../header.php";
                         $qty = (int)($book->quantity ?? 0);
                         $avl = (int)($book->available ?? 0);
                         $cover = trim($book->cover_image ?? '');
-                        $coverUrl = $cover !== '' ? 'uploads/covers/' . rawurlencode($cover) : '';
+                        $coverUrl = $cover !== '' ? 'img/product/' . rawurlencode($cover) : '';
                         $firstLetter = mb_substr($book->title ?? '?', 0, 1, 'UTF-8');
                         $isOut = $avl <= 0;
                     ?>
