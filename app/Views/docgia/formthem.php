@@ -1,4 +1,4 @@
-
+<?php require_once __DIR__."/../header.php"; ?>
 
 <h1>
     Thêm mới 
@@ -32,3 +32,5 @@
     <button type="submit">Thêm độc giả</button>
 
 </form>
+
+<?php require_once __DIR__."/../footer.php"; ?>

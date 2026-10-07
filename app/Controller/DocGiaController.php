@@ -13,7 +13,7 @@ class DocGiaController
     public function index()
     {
         $dsDocGia = $this->doc_gia->selectAll();                     // Lấy toàn bộ danh sách độc giả từ Database
-        require_once __DIR__ . "/../Views/List.php";
+        require_once __DIR__ . "/../Views/docgia/List.php";
     }
 
     public function create()
@@ -32,7 +32,18 @@ class DocGiaController
             }
             
         }
-        require_once __DIR__ . "/../Views/formthem.php";
+        require_once __DIR__ . "/../Views/docgia/formthem.php";
     }
+
+
+    public function update(int $id){
+
+
+        $docgia = $this->doc_gia->getDocGiaByID($id);
+        require_once __DIR__ . "/../Views/docgia/formsua.php";
+    }
+
+
+
 }
 ?>

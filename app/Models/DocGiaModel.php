@@ -67,4 +67,15 @@ class DocGiaModel
             'id' => $this->id_doc_gia
         ]);
     }
+
+
+
+    public function getDocGiaByID(int $id){
+        $sql = "SELECT * FROM doc_gia WHERE id_doc_gia=:id";
+        $stm = $this->db->pdo->prepare($sql);
+        $stm->execute(['id' => $id]);
+
+        return $stm->fetch(PDO::FETCH_OBJ);
+
+    }
 }

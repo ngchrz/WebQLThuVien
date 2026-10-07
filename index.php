@@ -1,15 +1,27 @@
 <?php
+require_once __DIR__ . "/app/Controller/DashboardController.php";
 require_once __DIR__ . "/app/Controller/DocGiaController.php";
 
+$modun = $_GET['modun'] ?? "";
 $action = $_GET['action'] ?? "";
-$controller = new DocGiaController();
 
-switch($action):
-    case "create":
-        $controller->create();
+
+
+switch($modun):
+    case "Docgia":
+        $controller = new DocGiaController();
+        $id_docgia = $_GET['id_docgia'] ?? "";
+
+        if($action == "create")        
+            $controller->create();
+        elseif($action == "update")
+            $controller->update($id_docgia);
+        else
+            $controller->index();
         break;
     
     default:
+        $controller = new DashboardController();
         $controller->index();
         break;
 endswitch;
