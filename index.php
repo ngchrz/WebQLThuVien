@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/app/Controller/DashboardController.php";
 require_once __DIR__ . "/app/Controller/DocGiaController.php";
+require_once __DIR__ . "/app/Controller/BookController.php";
 
 $modun = $_GET['modun'] ?? "";
 $action = $_GET['action'] ?? "";
@@ -18,6 +19,10 @@ switch($modun):
             $controller->update($id_docgia);
         else
             $controller->index();
+        break;
+    case "Book":
+        $controller = new BookController();
+        $controller->index();
         break;
     
     default:

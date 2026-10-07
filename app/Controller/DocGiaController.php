@@ -13,7 +13,7 @@ class DocGiaController
     public function index()
     {
         $dsDocGia = $this->doc_gia->selectAll();                     // Lấy toàn bộ danh sách độc giả từ Database
-        require_once __DIR__ . "/../Views/docgia/List.php";
+        require_once __DIR__ . "/../Views/docgia/docgiaview.php";
     }
 
     public function create()
@@ -25,7 +25,7 @@ class DocGiaController
             $this->doc_gia->so_dien_thoai = $_POST['sdt'] ?? "";
             $this->doc_gia->dia_chi = $_POST['diachi'] ?? "";
             if($this->doc_gia->add()){
-                header('Location: index.php'); exit();
+                header('Location: index.php?modun=Docgia'); exit();
 
             }else{
                 echo "thêm mới không thành công";

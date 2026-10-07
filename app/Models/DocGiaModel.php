@@ -68,8 +68,6 @@ class DocGiaModel
         ]);
     }
 
-
-
     public function getDocGiaByID(int $id){
         $sql = "SELECT * FROM doc_gia WHERE id_doc_gia=:id";
         $stm = $this->db->pdo->prepare($sql);
