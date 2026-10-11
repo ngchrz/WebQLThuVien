@@ -124,6 +124,18 @@ INSERT INTO `users` (`username`, `password`, `role`, `status`, `id_doc_gia`) VAL
 ('thang',  '$2y$10$GcOAOdw0ardPstH09JXHU.hqs7CAjVnvTraxexPiDyv2.cBBFTzyq', 'user',  1, 6);
 
 -- ============================================================
+--  DU LIEU DEMO: PHIEU MUON / TRA
+--  user_id lien ket bang users -> tu dong gan voi ho so doc_gia
+-- ============================================================
+INSERT INTO `loans` (`user_id`, `book_id`, `borrow_date`, `due_date`, `return_date`, `status`) VALUES
+(2, 1, DATE_SUB(CURDATE(), INTERVAL 5 DAY),  DATE_ADD(CURDATE(), INTERVAL 9 DAY),  NULL,                                'borrowed'),
+(3, 4, DATE_SUB(CURDATE(), INTERVAL 20 DAY), DATE_SUB(CURDATE(), INTERVAL 6 DAY),  NULL,                                'borrowed'),
+(4, 2, DATE_SUB(CURDATE(), INTERVAL 30 DAY), DATE_SUB(CURDATE(), INTERVAL 16 DAY), DATE_SUB(CURDATE(), INTERVAL 18 DAY),'returned');
+
+-- Dong bo ton kho voi 2 phieu dang muon (book 1 va book 4)
+UPDATE `books` SET `available` = `available` - 1 WHERE `id` IN (1, 4);
+
+-- ============================================================
 --  QUY TAC ID: KHONG TAI SU DUNG ID DA XOA
 -- ============================================================
 -- Cac bang deu dung AUTO_INCREMENT, chi TANG va KHONG BAO GIO GIAM.

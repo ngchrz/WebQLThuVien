@@ -1,5 +1,6 @@
 <?php
 $pageTitle = 'Dashboard tổng quan';
+$isAdmin = (($_SESSION['user']['role'] ?? 'user') === 'admin');
 
 require_once __DIR__ . "/../header.php";
 
@@ -19,12 +20,21 @@ require_once __DIR__ . "/../header.php";
         <h2 class="text-xl sm:text-2xl font-extrabold mt-1.5 tracking-tight">Thư viện đang hoạt động tốt hôm nay</h2>
         <p class="text-indigo-100/90 text-sm mt-1.5 max-w-xl">Theo dõi tổng số sách, độc giả và lượt mượn trả ngay tại một nơi tập trung, trực quan.</p>
         <div class="flex flex-wrap gap-2.5 mt-4">
+            <?php if ($isAdmin): ?>
             <a href="index.php?modun=Docgia" class="btn-primary inline-flex items-center gap-2 bg-white text-indigo-700 text-sm font-semibold px-4 py-2.5 rounded-xl">
                 <i class="fa-solid fa-users text-xs"></i> Quản lý độc giả
             </a>
-            <a href="index.php?modun=Docgia&action=create" class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white text-sm font-semibold px-4 py-2.5 rounded-xl border border-white/20 transition">
-                <i class="fa-solid fa-plus text-xs"></i> Thêm độc giả mới
+            <a href="index.php?modun=Loan&action=create" class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white text-sm font-semibold px-4 py-2.5 rounded-xl border border-white/20 transition">
+                <i class="fa-solid fa-arrow-right-arrow-left text-xs"></i> Ghi nhận mượn / trả
             </a>
+            <?php else: ?>
+            <a href="index.php?modun=Book" class="btn-primary inline-flex items-center gap-2 bg-white text-indigo-700 text-sm font-semibold px-4 py-2.5 rounded-xl">
+                <i class="fa-solid fa-book text-xs"></i> Xem danh mục sách
+            </a>
+            <a href="index.php?modun=Loan" class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white text-sm font-semibold px-4 py-2.5 rounded-xl border border-white/20 transition">
+                <i class="fa-solid fa-clock-rotate-left text-xs"></i> Phiếu mượn của tôi
+            </a>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -70,7 +80,7 @@ require_once __DIR__ . "/../header.php";
             <p class="text-[13px] font-medium text-gray-500 flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-sky-500 inline-block"></span> Lượt đang mượn
             </p>
-            <h3 class="text-[28px] leading-8 font-extrabold text-gray-900 mt-2">48</h3>
+            <h3 class="text-[28px] leading-8 font-extrabold text-gray-900 mt-2"><?= $dangMuon ?? 0 ?></h3>
             <span class="text-[11px] font-semibold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full inline-flex items-center gap-1 mt-2.5 border border-sky-100">
                 <i class="fa-solid fa-clock text-[10px]"></i> Cần theo dõi hạn trả
             </span>
@@ -86,7 +96,7 @@ require_once __DIR__ . "/../header.php";
             <p class="text-[13px] font-medium text-gray-500 flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-violet-500 inline-block"></span> Người dùng hệ thống
             </p>
-            <h3 class="text-[28px] leading-8 font-extrabold text-gray-900 mt-2">6</h3>
+            <h3 class="text-[28px] leading-8 font-extrabold text-gray-900 mt-2"><?= $nguoiDung ?? 0 ?></h3>
             <span class="text-[11px] font-semibold text-violet-600 bg-violet-50 px-2.5 py-1 rounded-full inline-flex items-center gap-1 mt-2.5 border border-violet-100">
                 <i class="fa-solid fa-user-shield text-[10px]"></i> Quản trị & thủ thư
             </span>
@@ -112,6 +122,7 @@ require_once __DIR__ . "/../header.php";
             </span>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <?php if ($isAdmin): ?>
             <a href="index.php?modun=Docgia&action=create" class="group flex items-center gap-3 p-4 rounded-xl border border-gray-100 hover:border-indigo-200 hover:bg-indigo-50/50 transition">
                 <span class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 group-hover:scale-105 transition">
                     <i class="fa-solid fa-user-plus"></i>
@@ -132,24 +143,48 @@ require_once __DIR__ . "/../header.php";
                 </span>
                 <i class="fa-solid fa-chevron-right text-xs text-gray-300 ml-auto group-hover:text-indigo-500 group-hover:translate-x-0.5 transition"></i>
             </a>
-            <span class="flex items-center gap-3 p-4 rounded-xl border border-dashed border-gray-200 bg-gray-50/60 opacity-70">
-                <span class="w-11 h-11 rounded-xl bg-gray-200 text-gray-500 flex items-center justify-center shrink-0">
+            <a href="index.php?modun=Book&action=create" class="group flex items-center gap-3 p-4 rounded-xl border border-gray-100 hover:border-indigo-200 hover:bg-indigo-50/50 transition">
+                <span class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center shrink-0 group-hover:scale-105 transition">
                     <i class="fa-solid fa-book-medical"></i>
                 </span>
                 <span>
-                    <span class="block text-sm font-semibold text-gray-600">Nhập sách mới</span>
-                    <span class="block text-xs text-gray-400 mt-0.5">Sắp ra mắt</span>
+                    <span class="block text-sm font-semibold text-gray-800">Nhập sách mới</span>
+                    <span class="block text-xs text-gray-500 mt-0.5">Thêm đầu sách vào kho</span>
                 </span>
-            </span>
-            <span class="flex items-center gap-3 p-4 rounded-xl border border-dashed border-gray-200 bg-gray-50/60 opacity-70">
-                <span class="w-11 h-11 rounded-xl bg-gray-200 text-gray-500 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-chevron-right text-xs text-gray-300 ml-auto group-hover:text-indigo-500 group-hover:translate-x-0.5 transition"></i>
+            </a>
+            <a href="index.php?modun=Loan&action=create" class="group flex items-center gap-3 p-4 rounded-xl border border-gray-100 hover:border-indigo-200 hover:bg-indigo-50/50 transition">
+                <span class="w-11 h-11 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center shrink-0 group-hover:scale-105 transition">
                     <i class="fa-solid fa-arrow-right-arrow-left"></i>
                 </span>
                 <span>
-                    <span class="block text-sm font-semibold text-gray-600">Ghi nhận mượn / trả</span>
-                    <span class="block text-xs text-gray-400 mt-0.5">Sắp ra mắt</span>
+                    <span class="block text-sm font-semibold text-gray-800">Ghi nhận mượn / trả</span>
+                    <span class="block text-xs text-gray-500 mt-0.5">Tạo phiếu mượn cho độc giả</span>
                 </span>
-            </span>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-300 ml-auto group-hover:text-indigo-500 group-hover:translate-x-0.5 transition"></i>
+            </a>
+            <?php else: ?>
+            <a href="index.php?modun=Book" class="group flex items-center gap-3 p-4 rounded-xl border border-gray-100 hover:border-indigo-200 hover:bg-indigo-50/50 transition">
+                <span class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 group-hover:scale-105 transition">
+                    <i class="fa-solid fa-book"></i>
+                </span>
+                <span>
+                    <span class="block text-sm font-semibold text-gray-800">Danh mục sách</span>
+                    <span class="block text-xs text-gray-500 mt-0.5">Khám phá kho sách</span>
+                </span>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-300 ml-auto group-hover:text-indigo-500 group-hover:translate-x-0.5 transition"></i>
+            </a>
+            <a href="index.php?modun=Loan" class="group flex items-center gap-3 p-4 rounded-xl border border-gray-100 hover:border-indigo-200 hover:bg-indigo-50/50 transition">
+                <span class="w-11 h-11 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center shrink-0 group-hover:scale-105 transition">
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                </span>
+                <span>
+                    <span class="block text-sm font-semibold text-gray-800">Phiếu mượn của tôi</span>
+                    <span class="block text-xs text-gray-500 mt-0.5">Theo dõi sách đang mượn</span>
+                </span>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-300 ml-auto group-hover:text-indigo-500 group-hover:translate-x-0.5 transition"></i>
+            </a>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -168,10 +203,10 @@ require_once __DIR__ . "/../header.php";
             <div>
                 <div class="flex justify-between text-xs font-medium mb-1.5">
                     <span class="text-gray-600">Tỉ lệ sách đang được mượn</span>
-                    <span class="text-gray-900 font-bold">32%</span>
+                    <span class="text-gray-900 font-bold"><?= $tiLeDangMuon ?? 0 ?>%</span>
                 </div>
                 <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
-                    <div class="h-full w-[32%] bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full"></div>
+                    <div class="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" style="width: <?= (int)($tiLeDangMuon ?? 0) ?>%"></div>
                 </div>
             </div>
             <div>

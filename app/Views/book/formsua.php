@@ -237,7 +237,7 @@ require_once __DIR__ . "/../header.php";
                 var a = parseInt(avl.value || '0', 10);
                 if (isNaN(q) || q < 0 || isNaN(a) || a < 0 || a > q) {
                     e.preventDefault();
-                    alert('Số bản còn lại phải từ 0 đến tổng số bản.');
+                    wbAlert('Số bản còn lại phải từ 0 đến tổng số bản.', { type: 'error' });
                     avl.focus();
                 }
             });

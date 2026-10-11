@@ -103,7 +103,8 @@ require_once __DIR__ . "/../header.php";
                                        class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 border border-amber-100 hover:bg-amber-500 hover:text-white hover:border-amber-500 flex items-center justify-center transition">
                                         <i class="fa-solid fa-pen text-xs"></i>
                                     </a>
-                                    <a href="#" onclick="return confirm('Bạn có chắc muốn xóa độc giả này?');"
+                                    <a href="index.php?modun=Docgia&action=delete&id_docgia=<?= htmlspecialchars($doc_gia->id_doc_gia); ?>"
+                                       data-confirm="Bạn có chắc muốn xóa độc giả này?" data-confirm-type="danger" data-confirm-ok="Xoá"
                                        title="Xóa"
                                        class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 border border-rose-100 hover:bg-rose-500 hover:text-white hover:border-rose-500 flex items-center justify-center transition">
                                         <i class="fa-solid fa-trash text-xs"></i>

@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Quản lý sách';
+$pageTitle = !empty($isAdmin) ? 'Quản lý sách' : 'Danh mục sách';
 require_once __DIR__ . "/../header.php";
 ?>
 
@@ -10,7 +10,7 @@ require_once __DIR__ . "/../header.php";
             <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white flex items-center justify-center text-base shadow-lg shadow-indigo-200">
                 <i class="fa-solid fa-book"></i>
             </span>
-            Quản lý sách
+            <?= !empty($isAdmin) ? 'Quản lý sách' : 'Danh mục sách' ?>
         </h2>
         <!-- <p class="text-[13px] text-gray-500 mt-1.5 ml-[50px]">
             Tổng cộng <span class="font-bold text-gray-800"><?= $totalTitles ?></span> đầu sách
@@ -19,14 +19,33 @@ require_once __DIR__ . "/../header.php";
         </p> -->
     </div>
     <div class="flex items-center gap-2 shrink-0">
-        <a href="index.php" class="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-white border border-gray-200 px-4 py-2.5 rounded-xl hover:bg-gray-50 transition">
-            <i class="fa-solid fa-arrow-left text-xs"></i> Dashboard
-        </a>
-        <a href="index.php?modun=Book&action=create" class="btn-primary inline-flex items-center gap-2 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-200">
-            <i class="fa-solid fa-plus text-xs"></i> Thêm sách
-        </a>
+        <?php if (empty($isGuest)): ?>
+            <a href="index.php" class="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-white border border-gray-200 px-4 py-2.5 rounded-xl hover:bg-gray-50 transition">
+                <i class="fa-solid fa-arrow-left text-xs"></i> Dashboard
+            </a>
+            <?php if (!empty($isAdmin)): ?>
+            <a href="index.php?modun=Book&action=create" class="btn-primary inline-flex items-center gap-2 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-200">
+                <i class="fa-solid fa-plus text-xs"></i> Thêm sách
+            </a>
+            <?php endif; ?>
+        <?php endif; ?>
     </div>
 </div>
+
+<?php if (!empty($isGuest)): ?>
+<!-- Khách: gợi ý đăng nhập để mượn -->
+<div class="mb-5 flex flex-col sm:flex-row sm:items-center gap-3 rounded-2xl bg-indigo-50 border border-indigo-100 p-4">
+    <span class="w-9 h-9 rounded-lg bg-indigo-600 text-white flex items-center justify-center shrink-0 text-sm">
+        <i class="fa-solid fa-circle-info"></i>
+    </span>
+    <p class="text-[13px] text-indigo-800 leading-relaxed flex-1">
+        Bạn đang xem với tư cách <b>khách</b>. Đăng nhập hoặc đăng ký tài khoản độc giả để <b>mượn sách</b>.
+    </p>
+    <a href="index.php?modun=Auth&action=login" class="inline-flex items-center justify-center gap-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-xl transition shrink-0">
+        <i class="fa-solid fa-right-to-bracket text-xs"></i> Đăng nhập để mượn
+    </a>
+</div>
+<?php endif; ?>
 
 <!-- Stats cards -->
 <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5 mb-5">
@@ -151,17 +170,39 @@ require_once __DIR__ . "/../header.php";
                             </div>
                             <!-- Actions -->
                             <div class="flex items-center gap-2 mt-4 pt-3 border-t border-gray-100">
-                                <a href="index.php?modun=Book&action=update&id=<?= htmlspecialchars($book->id ?? '') ?>"
-                                   title="Sửa"
-                                   class="flex-1 inline-flex items-center justify-center gap-1.5 text-[13px] font-semibold text-amber-600 bg-amber-50 border border-amber-100 hover:bg-amber-500 hover:text-white hover:border-amber-500 px-3 py-2 rounded-xl transition">
-                                    <i class="fa-solid fa-pen text-[11px]"></i> Sửa
-                                </a>
-                                <a href="index.php?modun=Book&action=delete&id=<?= htmlspecialchars($book->id ?? '') ?>"
-                                   onclick="return confirm('Bạn có chắc muốn xóa sách này?');"
-                                   title="Xóa"
-                                   class="flex-1 inline-flex items-center justify-center gap-1.5 text-[13px] font-semibold text-rose-500 bg-rose-50 border border-rose-100 hover:bg-rose-500 hover:text-white hover:border-rose-500 px-3 py-2 rounded-xl transition">
-                                    <i class="fa-solid fa-trash text-[11px]"></i> Xóa
-                                </a>
+                                <?php if (!empty($isAdmin)): ?>
+                                    <a href="index.php?modun=Book&action=update&id=<?= htmlspecialchars($book->id ?? '') ?>"
+                                       title="Sửa"
+                                       class="flex-1 inline-flex items-center justify-center gap-1.5 text-[13px] font-semibold text-amber-600 bg-amber-50 border border-amber-100 hover:bg-amber-500 hover:text-white hover:border-amber-500 px-3 py-2 rounded-xl transition">
+                                        <i class="fa-solid fa-pen text-[11px]"></i> Sửa
+                                    </a>
+                                    <a href="index.php?modun=Book&action=delete&id=<?= htmlspecialchars($book->id ?? '') ?>"
+                                       data-confirm="Bạn có chắc muốn xóa sách này?" data-confirm-type="danger" data-confirm-ok="Xoá"
+                                       title="Xóa"
+                                       class="flex-1 inline-flex items-center justify-center gap-1.5 text-[13px] font-semibold text-rose-500 bg-rose-50 border border-rose-100 hover:bg-rose-500 hover:text-white hover:border-rose-500 px-3 py-2 rounded-xl transition">
+                                        <i class="fa-solid fa-trash text-[11px]"></i> Xóa
+                                    </a>
+                                <?php else: ?>
+                                    <?php $isMine = in_array((int)($book->id ?? 0), $myBorrowedBookIds ?? [], true); ?>
+                                    <?php if ($isMine): ?>
+                                        <a href="index.php?modun=Loan"
+                                           title="Xem phiếu mượn"
+                                           class="flex-1 inline-flex items-center justify-center gap-1.5 text-[13px] font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 px-3 py-2 rounded-xl transition">
+                                            <i class="fa-solid fa-circle-check text-[11px]"></i> Đang mượn
+                                        </a>
+                                    <?php elseif ($isOut): ?>
+                                        <span class="flex-1 inline-flex items-center justify-center gap-1.5 text-[13px] font-semibold text-gray-400 bg-gray-50 border border-gray-100 px-3 py-2 rounded-xl cursor-not-allowed">
+                                            <i class="fa-solid fa-ban text-[11px]"></i> Hết hàng
+                                        </span>
+                                    <?php else: ?>
+                                        <a href="index.php?modun=Loan&action=borrow&id=<?= htmlspecialchars($book->id ?? '') ?>"
+                                           <?= empty($isGuest) ? 'data-confirm="Mượn cuốn sách này? Hạn trả 14 ngày." data-confirm-type="info" data-confirm-ok="Mượn sách"' : '' ?>
+                                           title="Mượn sách"
+                                           class="flex-1 inline-flex items-center justify-center gap-1.5 text-[13px] font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 px-3 py-2 rounded-xl shadow-sm shadow-indigo-200 transition">
+                                            <i class="fa-solid fa-book-open-reader text-[11px]"></i> Mượn sách
+                                        </a>
+                                    <?php endif; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

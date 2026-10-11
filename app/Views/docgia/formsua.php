@@ -123,6 +123,18 @@ require_once __DIR__ . "/../header.php";
                 </div>
             </div>
 
+            <!-- Email -->
+            <div>
+                <label class="block text-[13px] font-semibold text-gray-700 mb-1.5">Email</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                        <i class="fa-regular fa-envelope text-gray-400 text-sm"></i>
+                    </span>
+                    <input type="email" name="email" value="<?= htmlspecialchars($docgia->email ?? '') ?>" placeholder="Email"
+                           class="w-full pl-10 pr-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-indigo-500 focus:outline-none transition">
+                </div>
+            </div>
+
             <!-- Actions -->
             <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
                 <button type="submit" class="btn-primary flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-semibold px-5 py-3 rounded-xl shadow-lg shadow-amber-200">

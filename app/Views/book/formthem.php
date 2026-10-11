@@ -154,7 +154,7 @@ require_once __DIR__ . "/../header.php";
                     <div class="flex-1">
                         <input type="file" name="cover_image" accept="image/*"
                                class="w-full text-sm text-gray-600 file:mr-3 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 file:transition bg-gray-50 border border-gray-200 rounded-xl focus:outline-none transition">
-                        <p class="text-[11px] text-gray-400 mt-1">File ảnh lưu vào <span class="font-mono">uploads/covers/</span>, tên file ghi vào cột <span class="font-mono">cover_image</span>.</p>
+                        <p class="text-[11px] text-gray-400 mt-1">File ảnh lưu vào <span class="font-mono">img/product/</span>, tên file ghi vào cột <span class="font-mono">cover_image</span>.</p>
                     </div>
                 </div>
             </div>
@@ -215,7 +215,7 @@ require_once __DIR__ . "/../header.php";
                     var a = avl.value === '' ? q : parseInt(avl.value, 10);
                     if (isNaN(q) || q < 0 || isNaN(a) || a < 0 || a > q) {
                         e.preventDefault();
-                        alert('Số bản còn lại phải từ 0 đến tổng số bản.');
+                        wbAlert('Số bản còn lại phải từ 0 đến tổng số bản.', { type: 'error' });
                         avl.focus();
                     }
                 });
