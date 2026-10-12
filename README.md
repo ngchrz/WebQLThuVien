@@ -48,7 +48,6 @@
 WebQLThuVien/
 ├── index.php                 # Router trung tâm (điều hướng module + action)
 ├── database.sql              # Script tạo CSDL + dữ liệu mẫu
-├── generate_password.php     # Tiện ích tạo hash mật khẩu
 ├── config/
 │   └── database.php          # Cấu hình kết nối CSDL (PDO)
 ├── app/
